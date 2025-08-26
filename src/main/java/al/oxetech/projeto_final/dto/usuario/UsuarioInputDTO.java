@@ -6,6 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+/**
+ * DTO usado para receber os dados do cliente ao criar um novo usuário.
+ * Inclui anotações de validação para garantir a integridade das informações.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,7 +23,7 @@ public class UsuarioInputDTO {
     private String email;
 
     @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres")
-    private String senha;
+    private String senha; // Senha em texto puro recebida da requisição
 
-    private Role role;
+    private Role role; // Papel escolhido para o novo usuário
 }
