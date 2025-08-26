@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * DTO de entrada para criação de relatórios.
+ * Contém apenas os dados necessários enviados pelo cliente.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,5 +23,5 @@ public class RelatorioInputDTO {
     private String conteudo;
 
     @NotNull
-    private Long autorId;
+    private Long autorId; // Identificador do autor que está criando o relatório
 }

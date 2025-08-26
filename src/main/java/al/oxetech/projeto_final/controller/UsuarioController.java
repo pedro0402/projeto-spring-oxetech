@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller responsável pelas operações relacionadas a {@link al.oxetech.projeto_final.model.Usuario}.
+ */
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -19,12 +22,19 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
+    /**
+     * Endpoint que cria um novo usuário a partir dos dados recebidos no corpo
+     * da requisição.
+     */
     @PostMapping
     public ResponseEntity<UsuarioDTO> criar(@RequestBody @Valid UsuarioInputDTO dto){
         UsuarioDTO novoUsuario = usuarioService.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
 
+    /**
+     * Retorna todos os usuários cadastrados.
+     */
     @GetMapping
     public List<UsuarioDTO> listarTodos(){
         return usuarioService.listarTodos();

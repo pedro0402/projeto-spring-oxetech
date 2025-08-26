@@ -2,11 +2,12 @@ package al.oxetech.projeto_final.dto.usuario;
 
 import al.oxetech.projeto_final.model.Role;
 import al.oxetech.projeto_final.model.Usuario;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
+/**
+ * DTO usado para retornar informações de um usuário ao cliente.
+ * Não expomos a senha aqui por questões de segurança.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
