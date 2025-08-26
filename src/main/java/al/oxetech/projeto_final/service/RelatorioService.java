@@ -1,15 +1,12 @@
-package al.oxetech.projeto_final.security;
+package al.oxetech.projeto_final.service;
 
 import al.oxetech.projeto_final.dto.relatorio.RelatorioDTO;
 import al.oxetech.projeto_final.dto.relatorio.RelatorioInputDTO;
-import al.oxetech.projeto_final.dto.usuario.UsuarioDTO;
-import al.oxetech.projeto_final.dto.usuario.UsuarioInputDTO;
 import al.oxetech.projeto_final.model.Relatorio;
 import al.oxetech.projeto_final.model.Usuario;
 import al.oxetech.projeto_final.repository.RelatorioRepository;
 import al.oxetech.projeto_final.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

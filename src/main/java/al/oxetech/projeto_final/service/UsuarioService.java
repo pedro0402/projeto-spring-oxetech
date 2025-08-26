@@ -1,4 +1,4 @@
-package al.oxetech.projeto_final.security;
+package al.oxetech.projeto_final.service;
 
 import al.oxetech.projeto_final.dto.usuario.UsuarioDTO;
 import al.oxetech.projeto_final.dto.usuario.UsuarioInputDTO;
