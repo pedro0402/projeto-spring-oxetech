@@ -6,6 +6,7 @@ import al.oxetech.projeto_final.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class UsuarioController {
      * Retorna todos os usuários cadastrados.
      */
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UsuarioDTO> listarTodos(){
         return usuarioService.listarTodos();
     }
