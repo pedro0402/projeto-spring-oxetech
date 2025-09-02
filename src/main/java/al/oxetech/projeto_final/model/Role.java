@@ -1,5 +1,7 @@
 package al.oxetech.projeto_final.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * Enumeração que define os papéis que um usuário pode assumir no sistema.
  *
@@ -8,6 +10,7 @@ package al.oxetech.projeto_final.model;
  * {@link al.oxetech.projeto_final.model.Usuario} somente possa receber um dos
  * valores aqui definidos, evitando erros e facilitando a leitura do código.</p>
  */
+@JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum Role {
     ADMIN,
     GERENTE,
