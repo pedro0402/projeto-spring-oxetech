@@ -4,9 +4,11 @@ import al.oxetech.projeto_final.dto.usuario.UsuarioDTO;
 import al.oxetech.projeto_final.dto.usuario.UsuarioInputDTO;
 import al.oxetech.projeto_final.model.Usuario;
 import al.oxetech.projeto_final.repository.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 /**
@@ -47,5 +49,11 @@ public class UsuarioService {
                 .stream()
                 .map(UsuarioDTO::new)
                 .toList();
+    }
+
+    public UsuarioDTO buscarPorId(Long id) {
+        Usuario u = usuarioRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+        return new UsuarioDTO(u);
     }
 }
