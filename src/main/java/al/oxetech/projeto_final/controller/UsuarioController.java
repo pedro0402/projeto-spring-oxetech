@@ -19,7 +19,7 @@ import java.util.List;
 public class UsuarioController {
     private final UsuarioService usuarioService;
 
-    public UsuarioController(UsuarioService usuarioService){
+    public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
@@ -28,7 +28,8 @@ public class UsuarioController {
      * da requisição.
      */
     @PostMapping
-    public ResponseEntity<UsuarioDTO> criar(@RequestBody @Valid UsuarioInputDTO dto){
+    @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE')")
+    public ResponseEntity<UsuarioDTO> criar(@RequestBody @Valid UsuarioInputDTO dto) {
         UsuarioDTO novoUsuario = usuarioService.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
@@ -37,8 +38,15 @@ public class UsuarioController {
      * Retorna todos os usuários cadastrados.
      */
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public List<UsuarioDTO> listarTodos(){
+    @PreAuthorize("hasAnyRole('COLABORADOR', 'GERENTE', 'ADMIN')")
+    public List<UsuarioDTO> listarTodos() {
         return usuarioService.listarTodos();
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE')")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        usuarioService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
