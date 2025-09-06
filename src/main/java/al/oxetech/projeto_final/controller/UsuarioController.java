@@ -50,4 +50,11 @@ public class UsuarioController {
         usuarioService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE')")
+    public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long id, @RequestBody @Valid UsuarioInputDTO dto) {
+        UsuarioDTO usuarioAtualizado = usuarioService.atualizar(id, dto);
+        return ResponseEntity.ok(usuarioAtualizado);
+    }
 }
