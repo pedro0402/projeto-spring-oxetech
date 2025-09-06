@@ -57,6 +57,23 @@ public class UsuarioService {
         usuarioRepository.delete(usuario);
     }
 
+    public UsuarioDTO atualizar(Long id, UsuarioInputDTO dto) {
+        Usuario usuario = buscarPorId(id);
+
+        usuario.setNome(dto.getNome());
+        usuario.setEmail(dto.getEmail());
+        usuario.setRole(dto.getRole());
+
+        if (dto.getSenha() != null && !dto.getSenha().isBlank()) {
+            usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
+        }
+
+        usuarioValidator.validar(usuario);
+
+        Usuario usuarioSalvo = usuarioRepository.save(usuario);
+
+        return usuarioMapper.toUsuarioDTO(usuarioSalvo);
+    }
 
     private Usuario buscarPorId(Long id) {
         return usuarioRepository.findById(id)
