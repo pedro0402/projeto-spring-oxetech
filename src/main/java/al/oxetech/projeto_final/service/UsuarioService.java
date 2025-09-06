@@ -3,6 +3,7 @@ package al.oxetech.projeto_final.service;
 import al.oxetech.projeto_final.dto.usuario.UsuarioDTO;
 import al.oxetech.projeto_final.dto.usuario.UsuarioInputDTO;
 import al.oxetech.projeto_final.exception.UsuarioNaoEncontradoException;
+import al.oxetech.projeto_final.mapper.UsuarioMapper;
 import al.oxetech.projeto_final.model.Usuario;
 import al.oxetech.projeto_final.repository.UsuarioRepository;
 import al.oxetech.projeto_final.validator.UsuarioValidator;
