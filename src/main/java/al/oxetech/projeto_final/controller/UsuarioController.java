@@ -16,6 +16,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/usuarios")
+@RequiredArgsConstructor
 public class UsuarioController {
     private final UsuarioService usuarioService;
 
