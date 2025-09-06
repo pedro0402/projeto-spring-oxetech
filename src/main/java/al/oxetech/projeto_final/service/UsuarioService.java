@@ -35,7 +35,7 @@ public class UsuarioService {
         // passwordEncoder.encode gera o hash da senha fornecida
         u.setSenha(passwordEncoder.encode(dto.getSenha()));
         u.setRole(dto.getRole());
-
+        usuarioValidator.validar(u);
         return new UsuarioDTO(usuarioRepository.save(u));
     }
 
