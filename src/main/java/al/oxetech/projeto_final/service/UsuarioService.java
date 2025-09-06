@@ -38,7 +38,7 @@ public class UsuarioService {
         u.setSenha(passwordEncoder.encode(dto.getSenha()));
         u.setRole(dto.getRole());
         usuarioValidator.validar(u);
-        return new UsuarioDTO(usuarioRepository.save(u));
+        return usuarioMapper.toUsuarioDTO(usuarioRepository.save(u));
     }
 
     /**
