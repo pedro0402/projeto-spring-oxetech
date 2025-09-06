@@ -53,7 +53,7 @@ public class UsuarioService {
 
     public void delete(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new UsuarioNotFoundException("Usuario com id: " + id + " não foi encontrado"));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuario com id: " + id + " não foi encontrado"));
         usuarioRepository.delete(usuario);
     }
 }
