@@ -24,6 +24,7 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository; // Interface de acesso aos dados
     private final PasswordEncoder passwordEncoder;     // Responsável pela criptografia das senhas
     private final UsuarioValidator usuarioValidator;
+    private final UsuarioMapper usuarioMapper;
 
 
     /**
