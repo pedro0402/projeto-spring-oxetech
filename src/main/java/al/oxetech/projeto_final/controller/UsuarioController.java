@@ -21,10 +21,6 @@ import java.util.List;
 public class UsuarioController {
     private final UsuarioService usuarioService;
 
-    public UsuarioController(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
-
     /**
      * Endpoint que cria um novo usuário a partir dos dados recebidos no corpo
      * da requisição.
