@@ -17,6 +17,7 @@ import java.util.Optional;
  * receber uma requisição antes de acessar o banco de dados.
  */
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository; // Interface de acesso aos dados
     private final PasswordEncoder passwordEncoder;     // Responsável pela criptografia das senhas
