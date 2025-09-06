@@ -28,7 +28,7 @@ public class UsuarioController {
      * da requisição.
      */
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE', 'COLABORADOR')")
     public ResponseEntity<UsuarioDTO> criar(@RequestBody @Valid UsuarioInputDTO dto) {
         UsuarioDTO novoUsuario = usuarioService.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
