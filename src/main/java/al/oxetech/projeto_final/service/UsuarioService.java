@@ -5,11 +5,13 @@ import al.oxetech.projeto_final.dto.usuario.UsuarioInputDTO;
 import al.oxetech.projeto_final.exception.UsuarioNotFoundException;
 import al.oxetech.projeto_final.model.Usuario;
 import al.oxetech.projeto_final.repository.UsuarioRepository;
+import al.oxetech.projeto_final.validator.UsuarioValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 /**
  * Camada de serviço responsável por aplicar as regras de negócio relacionadas
