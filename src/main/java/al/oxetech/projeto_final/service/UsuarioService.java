@@ -20,11 +20,8 @@ import java.util.Optional;
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository; // Interface de acesso aos dados
     private final PasswordEncoder passwordEncoder;     // Responsável pela criptografia das senhas
+    private final UsuarioValidator usuarioValidator;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
-        this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     /**
      * Cria um novo usuário. A senha é codificada com um algoritmo de hash antes
