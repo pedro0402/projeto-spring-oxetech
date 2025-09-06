@@ -56,4 +56,10 @@ public class UsuarioService {
                 .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuario com id: " + id + " não foi encontrado"));
         usuarioRepository.delete(usuario);
     }
+
+
+    private Usuario buscarPorId(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário com id: " + id + " não encontrado"));
+    }
 }
