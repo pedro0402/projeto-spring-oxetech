@@ -2,6 +2,7 @@ package al.oxetech.projeto_final.mapper;
 
 import al.oxetech.projeto_final.dto.usuario.UsuarioDTO;
 import al.oxetech.projeto_final.dto.usuario.UsuarioInputDTO;
+import al.oxetech.projeto_final.dto.usuario.UsuarioPatchDTO;
 import al.oxetech.projeto_final.model.Usuario;
 import org.mapstruct.Mapper;
 
