@@ -2,7 +2,10 @@ package al.oxetech.projeto_final.service;
 
 import al.oxetech.projeto_final.dto.usuario.UsuarioDTO;
 import al.oxetech.projeto_final.dto.usuario.UsuarioInputDTO;
+import al.oxetech.projeto_final.dto.usuario.UsuarioPatchDTO;
+import al.oxetech.projeto_final.exception.UsuarioAtualizacaoException;
 import al.oxetech.projeto_final.exception.UsuarioNaoEncontradoException;
+import al.oxetech.projeto_final.helper.NullAwareBeanUtilsBean;
 import al.oxetech.projeto_final.mapper.UsuarioMapper;
 import al.oxetech.projeto_final.model.Usuario;
 import al.oxetech.projeto_final.repository.UsuarioRepository;
@@ -11,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 
@@ -26,6 +30,7 @@ public class UsuarioService {
     private final PasswordEncoder passwordEncoder;     // Responsável pela criptografia das senhas
     private final UsuarioValidator usuarioValidator;
     private final UsuarioMapper usuarioMapper;
+    private final NullAwareBeanUtilsBean nullAwareBeanUtilsBean;
 
 
     /**
