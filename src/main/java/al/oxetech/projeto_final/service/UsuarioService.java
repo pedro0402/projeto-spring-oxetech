@@ -77,6 +77,20 @@ public class UsuarioService {
         return usuarioMapper.toUsuarioDTO(usuarioSalvo);
     }
 
+    public UsuarioDTO atualizarParcial(Long id, UsuarioPatchDTO usuarioPatchDTO) {
+        try {
+            Usuario usuarioExistente = buscarPorId(id);
+            nullAwareBeanUtilsBean.copyProperties(usuarioExistente, usuarioMapper.toEntity(usuarioPatchDTO));
+            if (usuarioPatchDTO.getSenha() != null && !usuarioPatchDTO.getSenha().isBlank()) {
+                usuarioExistente.setSenha(passwordEncoder.encode(usuarioExistente.getSenha()));
+            }
+            usuarioRepository.save(usuarioExistente);
+            return usuarioMapper.toUsuarioDTO(usuarioExistente);
+        } catch (InvocationTargetException | IllegalAccessException exception) {
+            throw new UsuarioAtualizacaoException("Erro ao atualizar parcialmente o usuário com id: " + id, exception);
+        }
+    }
+
     private Usuario buscarPorId(Long id) {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário com id: " + id + " não encontrado"));
