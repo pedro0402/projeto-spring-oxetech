@@ -20,4 +20,6 @@ public interface UsuarioMapper {
 
     Usuario toEntity(UsuarioInputDTO usuarioInputDTO);
 
+    Usuario toEntity(UsuarioPatchDTO usuarioPatchDTO);
+
 }
