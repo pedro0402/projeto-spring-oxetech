@@ -86,9 +86,6 @@ public class UsuarioService {
         try {
             Usuario usuarioExistente = buscarPorId(id);
             nullAwareBeanUtilsBean.copyProperties(usuarioExistente, usuarioMapper.toEntity(usuarioPatchDTO));
-            if (usuarioPatchDTO.getSenha() != null && !usuarioPatchDTO.getSenha().isBlank()) {
-                usuarioExistente.setSenha(passwordEncoder.encode(usuarioExistente.getSenha()));
-            }
             usuarioRepository.save(usuarioExistente);
             return usuarioMapper.toUsuarioDTO(usuarioExistente);
         } catch (InvocationTargetException | IllegalAccessException exception) {
