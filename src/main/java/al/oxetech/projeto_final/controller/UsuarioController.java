@@ -3,6 +3,7 @@ package al.oxetech.projeto_final.controller;
 import al.oxetech.projeto_final.dto.usuario.UsuarioDTO;
 import al.oxetech.projeto_final.dto.usuario.UsuarioInputDTO;
 import al.oxetech.projeto_final.dto.usuario.UsuarioPatchDTO;
+import al.oxetech.projeto_final.dto.usuario.UsuarioUpdateDTO;
 import al.oxetech.projeto_final.exception.SenhaInvalidaException;
 import al.oxetech.projeto_final.service.PasswordResetService;
 import al.oxetech.projeto_final.service.UsuarioService;
@@ -54,7 +55,7 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE')")
-    public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long id, @RequestBody @Valid UsuarioInputDTO dto) {
+    public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long id, @RequestBody @Valid UsuarioUpdateDTO dto) {
         UsuarioDTO usuarioAtualizado = usuarioService.atualizar(id, dto);
         return ResponseEntity.ok(usuarioAtualizado);
     }
