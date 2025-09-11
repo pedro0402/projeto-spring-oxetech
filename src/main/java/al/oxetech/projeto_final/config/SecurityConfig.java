@@ -1,4 +1,4 @@
-package al.oxetech.projeto_final.security;
+package al.oxetech.projeto_final.config;
 
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
