@@ -3,6 +3,8 @@ package al.oxetech.projeto_final.controller;
 import al.oxetech.projeto_final.dto.usuario.UsuarioDTO;
 import al.oxetech.projeto_final.dto.usuario.UsuarioInputDTO;
 import al.oxetech.projeto_final.dto.usuario.UsuarioPatchDTO;
+import al.oxetech.projeto_final.exception.SenhaInvalidaException;
+import al.oxetech.projeto_final.service.PasswordResetService;
 import al.oxetech.projeto_final.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UsuarioController {
     private final UsuarioService usuarioService;
+    private final PasswordResetService resetService;
 
     /**
      * Endpoint que cria um novo usuário a partir dos dados recebidos no corpo
@@ -59,5 +62,25 @@ public class UsuarioController {
     @PatchMapping("/{id}")
     public ResponseEntity<UsuarioDTO> atualizarParcial(@PathVariable Long id, @RequestBody @Valid UsuarioPatchDTO dto) {
         return ResponseEntity.ok(usuarioService.atualizarParcial(id, dto));
+    }
+
+    @PostMapping("/solicitar-codigo")
+    public ResponseEntity<Void> solicitarCodigo(@RequestParam String email) {
+        resetService.gerarTokenEEnviarEmail(email);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{id}/senha")
+    public ResponseEntity<Void> redefinirSenha(
+            @PathVariable Long id,
+            @RequestParam String codigo,
+            @RequestParam String novaSenha) {
+        try {
+            resetService.redefinirSenha(codigo, novaSenha);
+            return ResponseEntity.ok().build();
+        } catch (SenhaInvalidaException exception){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 }
