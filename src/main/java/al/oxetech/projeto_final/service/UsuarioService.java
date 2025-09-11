@@ -3,6 +3,7 @@ package al.oxetech.projeto_final.service;
 import al.oxetech.projeto_final.dto.usuario.UsuarioDTO;
 import al.oxetech.projeto_final.dto.usuario.UsuarioInputDTO;
 import al.oxetech.projeto_final.dto.usuario.UsuarioPatchDTO;
+import al.oxetech.projeto_final.dto.usuario.UsuarioUpdateDTO;
 import al.oxetech.projeto_final.exception.UsuarioAtualizacaoException;
 import al.oxetech.projeto_final.exception.UsuarioNaoEncontradoException;
 import al.oxetech.projeto_final.helper.NullAwareBeanUtilsBean;
@@ -64,16 +65,12 @@ public class UsuarioService {
         usuarioRepository.delete(usuario);
     }
 
-    public UsuarioDTO atualizar(Long id, UsuarioInputDTO dto) {
+    public UsuarioDTO atualizar(Long id, UsuarioUpdateDTO dto) {
         Usuario usuario = buscarPorId(id);
 
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());
         usuario.setRole(dto.getRole());
-
-        if (dto.getSenha() != null && !dto.getSenha().isBlank()) {
-            usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
-        }
 
         usuarioValidator.validar(usuario);
 
