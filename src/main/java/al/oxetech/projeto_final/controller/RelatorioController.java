@@ -2,6 +2,7 @@ package al.oxetech.projeto_final.controller;
 
 import al.oxetech.projeto_final.dto.relatorio.RelatorioDTO;
 import al.oxetech.projeto_final.dto.relatorio.RelatorioInputDTO;
+import al.oxetech.projeto_final.dto.relatorio.RelatorioInputUpdateDTO;
 import al.oxetech.projeto_final.service.RelatorioService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -54,5 +55,11 @@ public class RelatorioController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         relatorioService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RelatorioDTO> atualizar(@PathVariable Long id, @RequestBody @Valid RelatorioInputUpdateDTO dto) {
+        RelatorioDTO relatorioAtualizado = relatorioService.atualizar(id, dto);
+        return ResponseEntity.ok(relatorioAtualizado);
     }
 }
