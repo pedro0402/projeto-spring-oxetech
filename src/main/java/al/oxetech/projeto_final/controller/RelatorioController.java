@@ -22,7 +22,7 @@ public class RelatorioController {
 
     private final RelatorioService relatorioService;
 
-    public RelatorioController(RelatorioService relatorioService){
+    public RelatorioController(RelatorioService relatorioService) {
         this.relatorioService = relatorioService;
     }
 
@@ -30,7 +30,7 @@ public class RelatorioController {
      * Endpoint para criação de um novo relatório.
      */
     @PostMapping
-    public ResponseEntity<RelatorioDTO> criar(@RequestBody @Valid RelatorioInputDTO dto){
+    public ResponseEntity<RelatorioDTO> criar(@RequestBody @Valid RelatorioInputDTO dto) {
         RelatorioDTO novoRelatorio = relatorioService.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoRelatorio);
     }
@@ -39,8 +39,14 @@ public class RelatorioController {
      * Retorna todos os relatórios cadastrados.
      */
     @GetMapping
-    public ResponseEntity<List<RelatorioDTO>> listarTodos(){
+    public ResponseEntity<List<RelatorioDTO>> listarTodos() {
         List<RelatorioDTO> relatorioDTOS = relatorioService.listarTodos();
+        return ResponseEntity.ok(relatorioDTOS);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<RelatorioDTO>> listarPorUsuario(@PathVariable Long id) {
+        List<RelatorioDTO> relatorioDTOS = relatorioService.listarPorUsuario(id);
         return ResponseEntity.ok(relatorioDTOS);
     }
 }
