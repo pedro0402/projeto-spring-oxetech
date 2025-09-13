@@ -69,14 +69,13 @@ public class RelatorioService {
     }
 
     public void delete(Long id) {
-        Relatorio relatorio = relatorioRepository.findById(id)
-                .orElseThrow(() -> new RelatorioNaoEncontradoException("Relatório com ID: " + id + " não foi encontrado"));
+        Relatorio relatorio = buscarPorId(id);
+
         relatorioRepository.delete(relatorio);
     }
 
     public RelatorioDTO atualizar(Long id, RelatorioInputUpdateDTO updateDTO) {
-        Relatorio relatorio = relatorioRepository.findById(id)
-                .orElseThrow(() -> new RelatorioNaoEncontradoException("Relatório com ID: " + id + " não foi encontrado"));
+        Relatorio relatorio = buscarPorId(id);
 
         relatorio.setTitulo(updateDTO.getTitulo());
         relatorio.setConteudo(updateDTO.getConteudo());
@@ -85,5 +84,10 @@ public class RelatorioService {
         Relatorio save = relatorioRepository.save(relatorio);
 
         return mapper.toRelatorioDTO(save);
+    }
+
+    private Relatorio buscarPorId(Long id) {
+        return relatorioRepository.findById(id)
+                .orElseThrow(() -> new RelatorioNaoEncontradoException("Relatório com ID: " + id + " não foi encontrado"));
     }
 }
