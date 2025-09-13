@@ -2,6 +2,7 @@ package al.oxetech.projeto_final.service;
 
 import al.oxetech.projeto_final.dto.relatorio.RelatorioDTO;
 import al.oxetech.projeto_final.dto.relatorio.RelatorioInputDTO;
+import al.oxetech.projeto_final.exception.UsuarioNaoEncontradoException;
 import al.oxetech.projeto_final.model.Relatorio;
 import al.oxetech.projeto_final.model.Usuario;
 import al.oxetech.projeto_final.repository.RelatorioRepository;
@@ -52,6 +53,11 @@ public class RelatorioService {
      * Lista os relatórios pertencentes a um determinado usuário.
      */
     public List<RelatorioDTO> listarPorUsuario(Long idUsuario){
+
+        if (!usuarioRepository.existsById(idUsuario)){
+            throw new UsuarioNaoEncontradoException("Usuário: " + idUsuario + " não encontrado no banco");
+        }
+
         return relatorioRepository.findByAutorId(idUsuario).stream()
                 .map(RelatorioDTO::new)
                 .toList();
