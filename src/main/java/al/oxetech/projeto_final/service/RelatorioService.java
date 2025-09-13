@@ -11,11 +11,9 @@ import al.oxetech.projeto_final.model.Usuario;
 import al.oxetech.projeto_final.repository.RelatorioRepository;
 import al.oxetech.projeto_final.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Regras de negócio referentes aos relatórios. A camada de serviço coordena o
