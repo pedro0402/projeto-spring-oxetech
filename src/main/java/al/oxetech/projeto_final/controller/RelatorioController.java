@@ -49,4 +49,10 @@ public class RelatorioController {
         List<RelatorioDTO> relatorioDTOS = relatorioService.listarPorUsuario(id);
         return ResponseEntity.ok(relatorioDTOS);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        relatorioService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
