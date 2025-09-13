@@ -2,6 +2,7 @@ package al.oxetech.projeto_final.service;
 
 import al.oxetech.projeto_final.dto.relatorio.RelatorioDTO;
 import al.oxetech.projeto_final.dto.relatorio.RelatorioInputDTO;
+import al.oxetech.projeto_final.exception.RelatorioNaoEncontradoException;
 import al.oxetech.projeto_final.exception.UsuarioNaoEncontradoException;
 import al.oxetech.projeto_final.model.Relatorio;
 import al.oxetech.projeto_final.model.Usuario;
@@ -31,10 +32,10 @@ public class RelatorioService {
      * Salva um novo relatório. Primeiro busca o autor informado; se não existir,
      * lança uma {@link EntityNotFoundException}.
      */
-    public RelatorioDTO salvar(RelatorioInputDTO dto){
+    public RelatorioDTO salvar(RelatorioInputDTO dto) {
         Usuario autor = usuarioRepository.findById(dto.getAutorId())
                 .orElseThrow(() -> new EntityNotFoundException("usuario nao encontrado"));
-        Relatorio r =  new Relatorio();
+        Relatorio r = new Relatorio();
         r.setTitulo(dto.getTitulo());
         r.setConteudo(dto.getConteudo());
         r.setAutor(autor);
@@ -45,21 +46,27 @@ public class RelatorioService {
     /**
      * Retorna todos os relatórios cadastrados no banco de dados.
      */
-    public List<RelatorioDTO> listarTodos(){
+    public List<RelatorioDTO> listarTodos() {
         return relatorioRepository.findAll().stream().map(RelatorioDTO::new).toList();
     }
 
     /**
      * Lista os relatórios pertencentes a um determinado usuário.
      */
-    public List<RelatorioDTO> listarPorUsuario(Long idUsuario){
+    public List<RelatorioDTO> listarPorUsuario(Long idUsuario) {
 
-        if (!usuarioRepository.existsById(idUsuario)){
+        if (!usuarioRepository.existsById(idUsuario)) {
             throw new UsuarioNaoEncontradoException("Usuário: " + idUsuario + " não encontrado no banco");
         }
 
         return relatorioRepository.findByAutorId(idUsuario).stream()
                 .map(RelatorioDTO::new)
                 .toList();
+    }
+
+    public void delete(Long id) {
+        Relatorio relatorio = relatorioRepository.findById(id)
+                .orElseThrow(() -> new RelatorioNaoEncontradoException("Relatório com ID: " + id + " não foi encontrado"));
+        relatorioRepository.delete(relatorio);
     }
 }
