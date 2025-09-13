@@ -39,7 +39,8 @@ public class RelatorioController {
      * Retorna todos os relatórios cadastrados.
      */
     @GetMapping
-    public List<RelatorioDTO> listarTodos(){
-        return relatorioService.listarTodos();
+    public ResponseEntity<List<RelatorioDTO>> listarTodos(){
+        List<RelatorioDTO> relatorioDTOS = relatorioService.listarTodos();
+        return ResponseEntity.ok(relatorioDTOS);
     }
 }
