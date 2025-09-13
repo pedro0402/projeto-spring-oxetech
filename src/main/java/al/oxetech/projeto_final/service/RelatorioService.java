@@ -2,16 +2,20 @@ package al.oxetech.projeto_final.service;
 
 import al.oxetech.projeto_final.dto.relatorio.RelatorioDTO;
 import al.oxetech.projeto_final.dto.relatorio.RelatorioInputDTO;
+import al.oxetech.projeto_final.dto.relatorio.RelatorioInputUpdateDTO;
 import al.oxetech.projeto_final.exception.RelatorioNaoEncontradoException;
 import al.oxetech.projeto_final.exception.UsuarioNaoEncontradoException;
+import al.oxetech.projeto_final.mapper.RelatorioMapper;
 import al.oxetech.projeto_final.model.Relatorio;
 import al.oxetech.projeto_final.model.Usuario;
 import al.oxetech.projeto_final.repository.RelatorioRepository;
 import al.oxetech.projeto_final.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Regras de negócio referentes aos relatórios. A camada de serviço coordena o
@@ -22,10 +26,12 @@ import java.util.List;
 public class RelatorioService {
     private final RelatorioRepository relatorioRepository;
     private final UsuarioRepository usuarioRepository;
+    private final RelatorioMapper mapper;
 
-    public RelatorioService(RelatorioRepository relatorioRepository, UsuarioRepository usuarioRepository) {
+    public RelatorioService(RelatorioRepository relatorioRepository, UsuarioRepository usuarioRepository, RelatorioMapper mapper) {
         this.relatorioRepository = relatorioRepository;
         this.usuarioRepository = usuarioRepository;
+        this.mapper = mapper;
     }
 
     /**
@@ -68,5 +74,18 @@ public class RelatorioService {
         Relatorio relatorio = relatorioRepository.findById(id)
                 .orElseThrow(() -> new RelatorioNaoEncontradoException("Relatório com ID: " + id + " não foi encontrado"));
         relatorioRepository.delete(relatorio);
+    }
+
+    public RelatorioDTO atualizar(Long id, RelatorioInputUpdateDTO updateDTO) {
+        Relatorio relatorio = relatorioRepository.findById(id)
+                .orElseThrow(() -> new RelatorioNaoEncontradoException("Relatório com ID: " + id + " não foi encontrado"));
+
+        relatorio.setTitulo(updateDTO.getTitulo());
+        relatorio.setConteudo(updateDTO.getConteudo());
+
+
+        Relatorio save = relatorioRepository.save(relatorio);
+
+        return mapper.toRelatorioDTO(save);
     }
 }
