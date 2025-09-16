@@ -61,6 +61,7 @@ public class UsuarioController {
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'GERENTE')")
     public ResponseEntity<UsuarioDTO> atualizarParcial(@PathVariable Long id, @RequestBody @Valid UsuarioPatchDTO dto) {
         return ResponseEntity.ok(usuarioService.atualizarParcial(id, dto));
     }
