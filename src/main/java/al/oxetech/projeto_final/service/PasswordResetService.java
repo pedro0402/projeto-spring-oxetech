@@ -1,8 +1,9 @@
 package al.oxetech.projeto_final.service;
 
 import al.oxetech.projeto_final.exception.SenhaInvalidaException;
+import al.oxetech.projeto_final.exception.TokenExpiradoException;
+import al.oxetech.projeto_final.exception.TokenInvalidoException;
 import al.oxetech.projeto_final.exception.UsuarioNaoEncontradoException;
-import al.oxetech.projeto_final.mapper.UsuarioMapper;
 import al.oxetech.projeto_final.model.PasswordResetToken;
 import al.oxetech.projeto_final.model.Usuario;
 import al.oxetech.projeto_final.repository.PasswordResetTokenRepository;
@@ -24,7 +25,6 @@ public class PasswordResetService {
     private final UsuarioRepository usuarioRepository;
     private final JavaMailSender mailSender;
     private final PasswordEncoder passwordEncoder;
-    private final UsuarioMapper usuarioMapper;
 
     @Transactional
     public void gerarTokenEEnviarEmail(String email) {
@@ -70,11 +70,11 @@ public class PasswordResetService {
 
         //procuro no meu banco o token passado. caso nao exista, o token é inválido
         PasswordResetToken token = tokenRepository.findByToken(tokenCodigo)
-                .orElseThrow(() -> new RuntimeException("Token inválido"));
+                .orElseThrow(() -> new TokenInvalidoException("Token inválido"));
 
         //se o meu token tiver vencido, vai lançar uma exceção
         if (token.getExpiracao().isBefore(LocalDateTime.now())){
-            throw new RuntimeException("Token expirado");
+            throw new TokenExpiradoException("Token expirado");
         }
 
         //aqui eu pego o usuário que está associado ao meu token e defino a nova senha dele
