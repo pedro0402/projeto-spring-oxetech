@@ -3,8 +3,10 @@ package al.oxetech.projeto_final.service;
 import al.oxetech.projeto_final.dto.relatorio.RelatorioDTO;
 import al.oxetech.projeto_final.dto.relatorio.RelatorioInputDTO;
 import al.oxetech.projeto_final.dto.relatorio.RelatorioInputUpdateDTO;
+import al.oxetech.projeto_final.dto.relatorio.RelatorioPatchUpdateDTO;
 import al.oxetech.projeto_final.exception.RelatorioNaoEncontradoException;
 import al.oxetech.projeto_final.exception.UsuarioNaoEncontradoException;
+import al.oxetech.projeto_final.helper.NullAwareBeanUtilsBean;
 import al.oxetech.projeto_final.mapper.RelatorioMapper;
 import al.oxetech.projeto_final.model.Relatorio;
 import al.oxetech.projeto_final.model.Usuario;
@@ -13,6 +15,7 @@ import al.oxetech.projeto_final.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -25,11 +28,13 @@ public class RelatorioService {
     private final RelatorioRepository relatorioRepository;
     private final UsuarioRepository usuarioRepository;
     private final RelatorioMapper mapper;
+    private final NullAwareBeanUtilsBean nullAwareBeanUtilsBean;
 
-    public RelatorioService(RelatorioRepository relatorioRepository, UsuarioRepository usuarioRepository, RelatorioMapper mapper) {
+    public RelatorioService(RelatorioRepository relatorioRepository, UsuarioRepository usuarioRepository, RelatorioMapper mapper, NullAwareBeanUtilsBean nullAwareBeanUtilsBean) {
         this.relatorioRepository = relatorioRepository;
         this.usuarioRepository = usuarioRepository;
         this.mapper = mapper;
+        this.nullAwareBeanUtilsBean = nullAwareBeanUtilsBean;
     }
 
     /**
@@ -84,6 +89,17 @@ public class RelatorioService {
         Relatorio save = relatorioRepository.save(relatorio);
 
         return mapper.toRelatorioDTO(save);
+    }
+
+    public RelatorioDTO atualizarParcial(Long id, RelatorioPatchUpdateDTO patchUpdateDTO) {
+        try {
+            Relatorio relatorioExistente = buscarPorId(id);
+            nullAwareBeanUtilsBean.copyProperties(relatorioExistente, mapper.toEntity(patchUpdateDTO));
+            relatorioRepository.save(relatorioExistente);
+            return mapper.toRelatorioDTO(relatorioExistente);
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Relatorio buscarPorId(Long id) {
