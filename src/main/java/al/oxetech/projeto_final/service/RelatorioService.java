@@ -4,6 +4,7 @@ import al.oxetech.projeto_final.dto.relatorio.RelatorioDTO;
 import al.oxetech.projeto_final.dto.relatorio.RelatorioInputDTO;
 import al.oxetech.projeto_final.dto.relatorio.RelatorioInputUpdateDTO;
 import al.oxetech.projeto_final.dto.relatorio.RelatorioPatchUpdateDTO;
+import al.oxetech.projeto_final.dto.usuario.UsuarioDTO;
 import al.oxetech.projeto_final.exception.RelatorioNaoEncontradoException;
 import al.oxetech.projeto_final.exception.UsuarioNaoEncontradoException;
 import al.oxetech.projeto_final.helper.NullAwareBeanUtilsBean;
@@ -105,5 +106,12 @@ public class RelatorioService {
     private Relatorio buscarPorId(Long id) {
         return relatorioRepository.findById(id)
                 .orElseThrow(() -> new RelatorioNaoEncontradoException("Relatório com ID: " + id + " não foi encontrado"));
+    }
+
+    public RelatorioDTO buscarId(Long id) {
+        Relatorio relatorio = relatorioRepository.findById(id)
+                .orElseThrow(() -> new RelatorioNaoEncontradoException("relatorio nao encontrado"));
+
+        return mapper.toRelatorioDTO(relatorio);
     }
 }
