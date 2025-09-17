@@ -94,4 +94,11 @@ public class UsuarioService {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário com id: " + id + " não encontrado"));
     }
+
+    public UsuarioDTO buscarId(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário não encontrado"));
+
+        return usuarioMapper.toUsuarioDTO(usuario);
+    }
 }
