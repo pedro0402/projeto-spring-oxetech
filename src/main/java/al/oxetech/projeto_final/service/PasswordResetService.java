@@ -64,7 +64,7 @@ public class PasswordResetService {
     }
 
     public void redefinirSenha(String tokenCodigo, String novaSenha) {
-        if (novaSenha.length() <= 6){
+        if (novaSenha.length() < 6){
             throw new SenhaInvalidaException("senha deve ter no minimo 6 caracteres");
         }
 
